@@ -6,6 +6,7 @@
                             :allow-edit-tags="field.allowEditTags"
                             :placeholder="field.placeholder"
                             :autocompleteItems="filteredItems"
+                            :validation="validation"
             />
         </template>
     </default-field>
@@ -22,6 +23,13 @@ export default {
             tags: [],
             addOnKeys: [13, ',', ';'],
             autocompleteItems: [],
+            validation: [
+                {
+                    classes: 'no-email',
+                    rule: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    disableAdd: true,
+                }
+            ]
         }
     },
     mixins: [FormField, HandlesValidationErrors],
@@ -32,6 +40,15 @@ export default {
         // Set up default parameters
         this.autocompleteItems = (this.field.autocompleteItems) ? this.field.autocompleteItems : this.autocompleteItems;
         this.addOnKeys = (this.field.addOnKeys) ? this.field.addOnKeys : this.addOnKeys;
+        this.validation = this.field.attribute === "delivery_phone_numbers"
+            ? [
+                {
+                    classes: 'no-number',
+                    rule: /^\+?[1-9]\d{1,14}$/,
+                    disableAdd: true,
+                }
+            ]
+            : this.validation;
     },
 
     methods: {
@@ -55,7 +72,6 @@ export default {
          * Fill the given FormData object with the field's internal value.
          */
         fill(formData) {
-            console.log('fill', formData);
             formData.append(this.field.attribute, JSON.stringify(this.tags) || '')
         },
 
@@ -63,7 +79,6 @@ export default {
          * Update the field's internal value.
          */
         handleChange(value) {
-            console.log('handleChange', value);
             this.value = value
         },
 
@@ -72,7 +87,6 @@ export default {
          * @param newTags
          */
         tagsChanged(newTags) {
-            console.log('tagsChanged', newTags);
             this.tags = newTags;
         }
     },
