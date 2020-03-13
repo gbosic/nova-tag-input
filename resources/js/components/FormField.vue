@@ -40,7 +40,7 @@ export default {
         // Set up default parameters
         this.autocompleteItems = (this.field.autocompleteItems) ? this.field.autocompleteItems : this.autocompleteItems;
         this.addOnKeys = (this.field.addOnKeys) ? this.field.addOnKeys : this.addOnKeys;
-        this.validation = this.field.attribute === "delivery_phone_numbers"
+        this.validation = this.field.fieldToValidate === "phone"
             ? [
                 {
                     classes: 'no-number',

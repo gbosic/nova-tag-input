@@ -42,6 +42,11 @@ class Tags extends Field
         return $this->withMeta(['allowEditTags' => $allow]);
     }
 
+    public function validationRule(string $rule)
+    {
+        return $this->withMeta(['fieldToValidate' => $rule]);
+    }
+
     public function autocompleteItems(array $items)
     {
         /*
