@@ -55,6 +55,7 @@ export default {
          * Fill the given FormData object with the field's internal value.
          */
         fill(formData) {
+            console.log('fill', formData);
             formData.append(this.field.attribute, JSON.stringify(this.tags) || '')
         },
 
@@ -62,6 +63,7 @@ export default {
          * Update the field's internal value.
          */
         handleChange(value) {
+            console.log('handleChange', value);
             this.value = value
         },
 
@@ -70,6 +72,7 @@ export default {
          * @param newTags
          */
         tagsChanged(newTags) {
+            console.log('tagsChanged', newTags);
             this.tags = newTags;
         }
     },
